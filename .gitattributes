@@ -1,2 +1,1549 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// This is the program to insert the value in the linked list -->
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+void show(struct Node *head)
+{
+    int i = 0;
+    cout << "The element(s) of linked list are: " << endl;
+    while (head != NULL)
+    {
+        cout << head->data << " ";
+        head = head->next;
+        i++;
+    }
+    cout << "\nTotal elements are " << i << endl;
+}
+
+// case 1:
+struct Node *insert_beginning(struct Node *head, int val)
+{
+    struct Node *ptr = (struct Node *)malloc(sizeof(struct Node));
+    if (ptr == NULL)
+    {
+        cout << "OvereFlow";
+        return head;
+    }
+        ptr->data = val;
+        ptr->next = head;
+        head = ptr;
+        return ptr;
+}
+// case 2
+struct Node *insert_between(struct Node *head, int val, int pos)
+{
+    struct Node *ptr = (struct Node *)malloc(sizeof(struct Node));
+    if (ptr == NULL)
+    {
+        cout << "Overflow";
+        return head;
+    }
+
+    struct Node *temp = head;
+    int i = 1;
+    if (pos == 1)
+    {
+        return insert_beginning(head, val);
+    }
+    while (i != pos - 1)
+    {
+        temp = temp->next;
+        i++;
+    }
+    if (temp == NULL)
+    {
+        cout << "Desired position is not present!" << endl;
+        return head;
+    }
+    ptr->data = val;
+    ptr->next = temp->next;
+    temp->next = ptr;
+    return head;
+}
+
+// case 3
+struct Node *insert_end(struct Node *head, int val)
+{
+    struct Node *ptr = (struct Node *)malloc(sizeof(struct Node));
+    if (ptr == NULL)
+    {
+        cout << "overflow";
+        return head;
+    }
+    struct Node *temp = head;
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+    ptr->data = val;
+    ptr->next = NULL;
+    temp->next = ptr;
+    return head;
+}
+// case 4
+struct Node *insert_after(struct Node *head, struct Node *prevNode, int val)
+{
+    struct Node *ptr = (struct Node *)malloc(sizeof(struct Node));
+    if (ptr == NULL)
+    {
+        cout << "Overflow";
+        return head;
+    }
+    ptr->data = val;
+    ptr->next = prevNode->next;
+    prevNode->next = ptr;
+    return head;
+}
+
+int main()
+{
+    struct Node *head;
+    struct Node *second;
+    struct Node *third;
+    struct Node *forth;
+
+    head = (struct Node *)malloc(sizeof(struct Node));
+    second = (struct Node *)malloc(sizeof(struct Node));
+    third = (struct Node *)malloc(sizeof(struct Node));
+    forth = (struct Node *)malloc(sizeof(struct Node));
+
+    head->data = 1;
+    head->next = second;
+
+    second->data = 2;
+    second->next = third;
+
+    third->data = 3;
+    third->next = forth;
+
+    forth->data = 4;
+    forth->next = NULL;
+
+    cout << "Before insertion: " << endl;
+    show(head);
+
+    int val;
+
+    // cout << "Enter the the value to insert at forth position ";
+    // cin >> val;
+    // insert_after(head, third, val);
+    // cout << "This is insertion in beginning: " << endl;
+    // show(head);
+
+    // cout << "Enter the value to insert in linked list at beginning: ";
+    // cin >> val;
+    // head = insert_beginning(head, val);
+    // cout << "This is insertion in beginning: " << endl;
+    // show(head);
+
+    int pos;
+    cout << "Enter the value to insert in linked list in between: ";
+    cin >> val;
+    cout << "Enter the position after which the value is to be insert: ";
+    cin >> pos;
+    head = insert_between(head, val, pos);
+    cout << "This is insertion in between: " << endl;
+    show(head);
+
+    // cout << "Enter the value to insert at end: ";
+    // cin >> val;
+    // head = insert_end(head, val);
+    // cout << "This is insertion in end: " << endl;
+    // show(head);
+
+    return 0;
+}
+
+
+
+
+
+
+//Program insertion in doubly linked list
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    struct Node *prev;
+    int data;
+    struct Node *next;
+};
+
+void show(struct Node *head)
+{
+    int i = 0;
+    while (head != NULL)
+    {
+        cout << head->data << " ";
+        head = head->next;
+        i++;
+    }
+    cout << "\nThe total Number of elements are: " << i << endl;
+}
+
+// case 1
+struct Node *insert_beginning(struct Node *head,int val)
+{
+    struct Node *newNode=(struct Node *)malloc(sizeof(struct Node)),*temp;
+    if(newNode==NULL)
+    {
+        cout<<"Overflow";
+        return head;
+    }
+    newNode->prev=NULL;
+    newNode->data=val;
+    newNode->next=head;
+    head->prev=newNode;
+    head=newNode;
+    return head;
+}
+
+// case 2
+struct Node *insert_end(struct Node * head,int val)
+{
+    struct Node *newNode=(struct Node *)malloc(sizeof(struct Node)),*temp=head;
+    if(newNode==NULL)
+    {
+        cout<<"Overflow";
+        return head;
+    }
+    while (temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    newNode->data=val;
+    newNode->next=NULL;
+    newNode->prev=temp;
+    temp->next=newNode;
+    return head;
+}
+
+// case 3
+struct Node * insert_between(struct Node *head,int val,int pos)
+{
+    struct Node * newNode=(struct Node *)malloc(sizeof(struct Node)),*temp=head;
+    if(newNode==NULL)
+    {
+        cout<<"Overflow";
+        return head;
+    }
+
+    if(pos==1)
+    {
+        head=insert_beginning(head,val);
+        return head;
+    }
+
+    int i=1;
+    while (i<pos-1)
+    {
+        temp=temp->next;
+        i++;
+    }
+    if(temp==NULL)
+    {
+        cout<<"\nThe desired position is invalid\n";
+        return head;
+    }
+    newNode->data=val;
+    newNode->next=temp->next;
+    newNode->prev-temp;
+    temp->next=newNode;
+    
+    return head;
+}
+
+int main()
+{
+    struct Node *head = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *second = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *third = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *forth = (struct Node *)malloc(sizeof(struct Node));
+
+    head->prev = NULL;
+    head->data = 1;
+    head->next = second;
+
+    second->prev = head;
+    second->data = 2;
+    second->next = third;
+
+    third->prev = second;
+    third->data = 3;
+    third->next = forth;
+
+    forth->prev = third;
+    forth->data = 4;
+    forth->next = NULL;
+
+    cout<<"\nDoubly Linked list before insertion\n";
+    show(head);
+
+    int val;
+    
+    cout<<"\nEnter the value to inserte in beginning: ";
+    cin>>val;
+    head=insert_beginning(head,val);
+    cout<<"\nLinked after insertion in beginning: \n";
+    show(head);
+
+    cout<<"\nEnter the value to inserte in end: ";
+    cin>>val;
+    head=insert_end(head,val);
+    cout<<"\nLinked after insertion in end: \n";
+    show(head);
+    
+    int pos;
+    cout<<"\nEnter the value to inserte in between: ";
+    cin>>val;
+    cout<<"\nEnter the podition of element: ";
+    cin>>pos;
+    head=insert_between(head,val,pos);
+    cout<<"\nLinked after insertion in between: \n";
+    show(head);
+
+    return 0;
+}
+
+
+
+
+
+
+//Program to insertion in circular linked list
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+void show(struct Node *head)
+{
+    int count = 0;
+    struct Node *temp = head;
+    if (head != NULL)
+    {
+        do
+        {
+            cout << temp->data << " ";
+            temp = temp->next;
+            count++;
+        } while (temp != head);
+    }
+    cout <<"\nTotal elements is linked list are "<<count<<endl;
+}
+
+// case 1
+struct Node *insert_beginning(struct Node *head, int val)
+{
+    struct Node *temp = (struct Node *)malloc(sizeof(struct Node)), *ptr = head;
+    if (head == NULL)
+    {
+        cout << "overflow";
+        return head;
+    }
+    temp->data = val;
+    temp->next = head;
+    if (head != NULL)
+    {
+        while (ptr->next != head)
+        {
+            ptr = ptr->next;
+        }
+        ptr->next = temp;
+    }
+    else
+        ptr->next = ptr;
+    head = temp;
+    return head;
+}
+
+// case 2
+struct Node *insert_end(struct Node *head, int val)
+{
+    struct Node *temp = (struct Node *)malloc(sizeof(struct Node)), *ptr = head;
+    if (head == NULL)
+    {
+        cout << "overflow";
+        return head;
+    }
+    temp->data = val;
+    temp->next = head;
+    if (head != NULL)
+    {
+        while (ptr->next != head)
+        {
+            ptr = ptr->next;
+        }
+        ptr->next = temp;
+    }
+    else
+        ptr->next = ptr;
+    return head;
+}
+
+// case 3
+struct Node *insert_between(struct Node *head, int val, int pos)
+{
+    struct Node *temp = (struct Node *)malloc(sizeof(struct Node)), *ptr = head,*ptr1=head;
+    if (head == NULL)
+    {
+        cout << "overflow";
+        return head;
+    }
+    int count = 0;
+    if (head != NULL)
+    {
+        do
+        {
+            ptr1 = ptr1->next;
+            count++;
+        } while (ptr1 != head);
+    }    
+    if(pos>count)
+    {
+        cout<<"\nInvalid Input\n";
+        return 0;
+    }
+    if (pos == 1)
+    {
+        head=insert_beginning(head, val);
+        return head;
+    }
+    temp->data = val;
+    int i = 2;
+    if (head != NULL)
+    {
+        while (i <= (pos - 1))
+        {
+            ptr = ptr->next;
+            i++;
+        }
+        temp->next = ptr->next;
+        ptr->next = temp;
+    }
+    else
+        ptr->next = ptr;
+    return head;
+}
+
+int main()
+{
+    struct Node *head = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *second = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *third = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *forth = (struct Node *)malloc(sizeof(struct Node));
+
+    head->data = 1;
+    head->next = second;
+
+    second->data = 2;
+    second->next = third;
+
+    third->data = 3;
+    third->next = forth;
+
+    forth->data = 4;
+    forth->next = head;
+
+    cout << "\nElements in circular linked list are: " << endl;
+    show(head);
+
+    int val;
+    cout << "\nEnter the value to insert in beginning: ";
+    cin >> val;
+    head = insert_beginning(head, val);
+    cout << "\nElements after insertion in beginning:\n ";
+    show(head);
+
+    cout << "\nEnter the value to insert in end: ";
+    cin>>val;
+    head=insert_end(head,val);
+    cout << "\nElements after insertion in end:\n ";
+    show(head);
+
+    int pos;
+    cout << "\nEnter the value to insert in between: ";
+    cin >> val;
+    cout << "\nEnter the position of element: ";
+    cin >> pos;
+    head = insert_between(head, val, pos);
+    show(head);
+
+    return 0;
+}
+
+
+
+
+
+
+//Program in deletion in singly linked list
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+void show(struct Node *head)
+{
+    int i = 0;
+    cout << "The element(s) in linked list are: ";
+    while (head != NULL)
+    {
+        cout << head->data << " ";
+        head = head->next;
+        i++;
+    }
+    cout << "\nTotal elements are: " << i << endl;
+}
+
+// case 1
+struct Node *delete_begining(struct Node *head)
+{
+    if (head == NULL)
+    {
+        cout << "Underflow";
+        return head;
+    }
+    struct Node *ptr = head;
+    head = head->next;
+    free(ptr);
+    return head;
+}
+
+// case 2
+struct Node *delete_between(struct Node *head, int pos)
+{
+    if (head == NULL)
+    {
+        cout << "Underflow";
+        return head;
+    }
+    struct Node *temp = head, *ptr = head->next;
+    int i = 1;
+    if(pos==1)
+    {
+        return delete_begining(head);
+    }
+    while (i < pos-1)
+    {
+        temp = temp->next;
+        ptr = ptr->next;
+        i++;
+    }
+    if (ptr == NULL)
+    {
+        cout << "\nThe desired position is not present!\n";
+        return head;
+    }
+    temp->next = ptr->next;
+    free(ptr);
+    return head;
+}
+
+// case 3
+struct Node *delete_end(struct Node *head)
+{
+    if (head == NULL)
+    {
+        cout << "Overflow";
+        return head;
+    }
+    struct Node *ptr = head, *ptr1;
+    while (ptr->next != NULL)
+    {
+        ptr1 = ptr;
+        ptr = ptr->next;
+    }
+    ptr1->next = NULL;
+    return head;
+}
+
+int main()
+{
+    struct Node *head = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *second = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *third = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *forth = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *fifth = (struct Node *)malloc(sizeof(struct Node));
+
+    head->data = 1;
+    head->next = second;
+
+    second->data = 2;
+    second->next = third;
+
+    third->data = 3;
+    third->next = forth;
+
+    forth->data = 4;
+    forth->next = fifth;
+
+    fifth->data = 5;
+    fifth->next = NULL;
+
+    cout << "\nLinked list before deletion: " << endl;
+    show(head);
+
+    head = delete_begining(head);
+    cout << "\nLinked after deletion in beginning: " << endl;
+    show(head);
+
+    int pos;
+    cout << "\nEnter the position to delete: ";
+    cin >> pos;
+    head = delete_between(head, pos);
+    cout << "\nLinked after deletion in between: " << endl;
+    show(head);
+
+    cout << "\nLinked list after the deletion in end";
+    head = delete_end(head);
+    show(head);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+// This is the program in deletion in doubly linked list
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    struct Node *prev;
+    int data;
+    struct Node *next;
+};
+
+void show(struct Node *head)
+{
+    int i = 0;
+    cout << "\nThe elements in doubly linked list are: " << endl;
+    while (head != NULL)
+    {
+        cout << head->data << " ";
+        head = head->next;
+        i++;
+    }
+    cout << "\nThe total Number of elements are: " << i << endl;
+}
+
+struct Node *Deletion_beginning(struct Node *head)
+{
+    if (head == NULL)
+    {
+        cout << "Underflow";
+        return head;
+    }
+    struct Node *ptr = head;
+    head = head->next;
+    head->prev = NULL;
+    free(ptr);
+    return head;
+}
+
+struct Node *Deletion_between(struct Node *head, int pos)
+{
+    if (head == NULL)
+    {
+        cout << "Underflow";
+        return head;
+    }
+    struct Node *temp = head, *ptr;
+    while (temp->data != pos)
+    {
+        temp = temp->next;
+    }
+
+    if (temp->next == NULL)
+    {
+        cout << "\nElement Not present! \n";
+        return head;
+    }
+    ptr = temp->next;
+    temp->next = ptr->next;
+    ptr->next->prev = temp;
+    free(ptr);
+
+    return head;
+}
+
+struct Node *delete_end(struct Node *head)
+{
+    if (head == NULL)
+    {
+        cout << "Underflow";
+        return head;
+    }
+    struct Node *temp=head;
+    while (temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    temp->prev->next=NULL;
+    free(temp);
+    return head;
+}
+
+int main()
+{
+    struct Node *head = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *second = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *third = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *forth = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *fifth = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *sixth = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *seventh = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *eight = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *nini = (struct Node *)malloc(sizeof(struct Node));
+
+    head->prev = NULL;
+    head->data = 1;
+    head->next = second;
+
+    second->prev = head;
+    second->data = 2;
+    second->next = third;
+
+    third->prev = second;
+    third->data = 3;
+    third->next = forth;
+
+    forth->prev = third;
+    forth->data = 4;
+    forth->next = fifth;
+
+    fifth->prev = forth;
+    fifth->data = 5;
+    fifth->next = sixth;
+
+    sixth->prev = fifth;
+    sixth->data = 6;
+    sixth->next = seventh;
+
+    seventh->prev = sixth;
+    seventh->data = 7;
+    seventh->next = eight;
+
+    eight->prev = seventh;
+    eight->data = 8;
+    eight->next = nini;
+
+    nini->prev = eight;
+    nini->data = 9;
+    nini->next = NULL;
+
+    show(head);
+
+    head = Deletion_beginning(head);
+    cout << "\nLinked list after the deletion in BEGINNING: " << endl;
+    show(head);
+
+    int pos;
+    cout << "\nEnter the position to delete: ";
+    cin >> pos;
+    head = Deletion_between(head, pos);
+    cout << "\nLinked after the deletion in BETWEEN: " << endl;
+    show(head);
+
+    head = delete_end(head);
+    cout << "\nLnked list after deletion in end: \n";
+    show(head);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+//Program to delete in circular linked list
+//Incomplete!
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+void show(struct Node *head)
+{
+    struct Node *temp = head;
+    int i = 0;
+    if (head != NULL)
+    {
+        do
+        {
+            cout << head->data << " ";
+            head = head->next;
+            i++;
+        } while (temp != head);
+    }
+    cout << "\nTotal number of elements are " << i << endl;
+}
+
+// case 1
+struct Node *delete_beginning(struct Node *head)
+{
+    struct Node *temp = head, *ptr = head, *ptr1 = head->next;
+    if (head == NULL)
+    {
+        cout << "Underflow";
+        return head;
+    }
+    while (ptr->next != head)
+    {
+        ptr = ptr->next;
+    }
+    ptr->next = head->next;
+    free(temp);
+    return head;
+}
+
+int main()
+{
+    struct Node *head = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *second = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *third = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *forth = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *fifth = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *sixth = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *seventh = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *eight = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *nini = (struct Node *)malloc(sizeof(struct Node));
+
+    head->data = 1;
+    head->next = second;
+
+    second->data = 2;
+    second->next = third;
+
+    third->data = 3;
+    third->next = forth;
+
+    forth->data = 4;
+    forth->next = fifth;
+
+    fifth->data = 5;
+    fifth->next = sixth;
+
+    sixth->data = 6;
+    sixth->next = seventh;
+
+    seventh->data = 7;
+    seventh->next = eight;
+
+    eight->data = 8;
+    eight->next = nini;
+
+    nini->data = 9;
+    nini->next = head;
+
+    cout << "\nElements in circular linked list are: " << endl;
+    show(head);
+
+    head = delete_beginning(head);
+    cout << "\nThis is circular linked list after deletion in beginning: ";
+    show(head);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+int linearSearch(int arry[] , int n , int key)
+{
+    for(int i=0;i<n;i++)
+    {
+    if(key==arry[i])
+    return i;
+    }
+    return -1;
+}
+
+
+
+
+
+
+
+int binarySearch(int arry[],int n, int key)
+{
+    int s=0;
+    int e=n;
+    
+    while(s<=e)
+    {
+    int mid=(s+e)/2;
+    
+    if(key==arry[mid])
+    return mid;
+    else if(key<arry[mid])
+    e=mid-1;
+    else
+    s=mid+1;
+    
+    }
+    
+    return -1;
+}
+
+
+
+
+
+
+
+
+int bubbleSort(int arry[],int n)
+{
+    int counter =1;
+    while(counter < n)
+    {
+        for(int i=0;i<n-counter; i++)
+        {
+            if(arry[i]>arry[i+1])
+            {
+                int temp=arry[i];
+                arry[i]=arry[i+1];
+                arry[i+1]=temp;
+            }
+        }
+        counter++;
+    }
+}
+
+
+
+
+
+
+
+
+int insertionsort(int arry[],int n)
+{
+    for(int i =1;i<n;i++)
+    {
+        int current = arry[i];
+        int j=i-1;
+
+        while(arry[j]>current && j>=0)
+        {
+            arry[j+1]=arry[j];
+            j--;
+        }
+        arry[j+1]=current;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+void selectionSort(int arr[], int n)
+{
+    int i, j, min_idx;
+ 
+    // One by one move boundary of unsorted subarray
+    for (i = 0; i < n-1; i++)
+    {
+        // Find the minimum element in unsorted array
+        min_idx = i;
+        for (j = i+1; j < n; j++)
+        if (arr[j] < arr[min_idx])
+            min_idx = j;
+ 
+        // Swap the found minimum element with the first element
+        swap(&arr[min_idx], &arr[i]);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Quick sort
+// C++ Implementation of the Quick Sort Algorithm.
+#include <iostream>
+using namespace std;
+
+int partition(int arr[], int start, int end)
+{
+
+	int pivot = arr[start];
+
+	int count = 0;
+	for (int i = start + 1; i <= end; i++) {
+		if (arr[i] <= pivot)
+			count++;
+	}
+
+	// Giving pivot element its correct position
+	int pivotIndex = start + count;
+	swap(arr[pivotIndex], arr[start]);
+
+	// Sorting left and right parts of the pivot element
+	int i = start, j = end;
+
+	while (i < pivotIndex && j > pivotIndex) {
+
+		while (arr[i] <= pivot) {
+			i++;
+		}
+
+		while (arr[j] > pivot) {
+			j--;
+		}
+
+		if (i < pivotIndex && j > pivotIndex) {
+			swap(arr[i++], arr[j--]);
+		}
+	}
+
+	return pivotIndex;
+}
+
+void quickSort(int arr[], int start, int end)
+{
+
+	// base case
+	if (start >= end)
+		return;
+
+	// partitioning the array
+	int p = partition(arr, start, end);
+
+	// Sorting the left part
+	quickSort(arr, start, p - 1);
+
+	// Sorting the right part
+	quickSort(arr, p + 1, end);
+}
+
+int main()
+{
+
+	int arr[] = { 9, 3, 4, 2, 1, 8 };
+	int n = 6;
+
+	quickSort(arr, 0, n - 1);
+
+	for (int i = 0; i < n; i++) {
+		cout << arr[i] << " ";
+	}
+
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//heap sort
+// C++ program for implementation of Heap Sort
+#include <iostream>
+using namespace std;
+
+// To heapify a subtree rooted with node i which is
+// an index in arr[]. n is size of heap
+void heapify(int arr[], int n, int i)
+{
+	int largest = i; // Initialize largest as root
+	int l = 2 * i + 1; // left = 2*i + 1
+	int r = 2 * i + 2; // right = 2*i + 2
+
+	// If left child is larger than root
+	if (l < n && arr[l] > arr[largest])
+		largest = l;
+
+	// If right child is larger than largest so far
+	if (r < n && arr[r] > arr[largest])
+		largest = r;
+
+	// If largest is not root
+	if (largest != i) {
+		swap(arr[i], arr[largest]);
+
+		// Recursively heapify the affected sub-tree
+		heapify(arr, n, largest);
+	}
+}
+
+// main function to do heap sort
+void heapSort(int arr[], int n)
+{
+	// Build heap (rearrange array)
+	for (int i = n / 2 - 1; i >= 0; i--)
+		heapify(arr, n, i);
+
+	// One by one extract an element from heap
+	for (int i = n - 1; i >= 0; i--) {
+		// Move current root to end
+		swap(arr[0], arr[i]);
+
+		// call max heapify on the reduced heap
+		heapify(arr, i, 0);
+	}
+}
+
+/* A utility function to print array of size n */
+void printArray(int arr[], int n)
+{
+	for (int i = 0; i < n; ++i)
+		cout << arr[i] << " ";
+	cout << "\n";
+}
+
+// Driver program
+int main()
+{
+	int arr[] = { 12, 11, 13, 5, 6, 7 };
+	int n = sizeof(arr) / sizeof(arr[0]);
+
+	heapSort(arr, n);
+
+	cout << "Sorted array is \n";
+	printArray(arr, n);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// C++ Program for counting sort
+#include <bits/stdc++.h>
+#include <string.h>
+using namespace std;
+#define RANGE 255
+
+// The main function that sort
+// the given string arr[] in
+// alphabetical order
+void countSort(char arr[])
+{
+	// The output character array
+	// that will have sorted arr
+	char output[strlen(arr)];
+
+	// Create a count array to store count of individual
+	// characters and initialize count array as 0
+	int count[RANGE + 1], i;
+	memset(count, 0, sizeof(count));
+
+	// Store count of each character
+	for (i = 0; arr[i]; ++i)
+		++count[arr[i]];
+
+	// Change count[i] so that count[i] now contains actual
+	// position of this character in output array
+	for (i = 1; i <= RANGE; ++i)
+		count[i] += count[i - 1];
+
+	// Build the output character array
+	for (i = 0; arr[i]; ++i) {
+		output[count[arr[i]] - 1] = arr[i];
+		--count[arr[i]];
+	}
+
+	/*
+	For Stable algorithm
+	for (i = sizeof(arr)-1; i>=0; --i)
+	{
+		output[count[arr[i]]-1] = arr[i];
+		--count[arr[i]];
+	}
+	
+	For Logic : See implementation
+	*/
+
+	// Copy the output array to arr, so that arr now
+	// contains sorted characters
+	for (i = 0; arr[i]; ++i)
+		arr[i] = output[i];
+}
+
+// Driver code
+int main()
+{
+	char arr[] = "geeksforgeeks";
+
+	countSort(arr);
+
+	cout << "Sorted character array is " << arr;
+	return 0;
+}
+
+// This code is contributed by rathbhupendra
+
+
+
+
+
+
+
+
+
+
+
+
+
+// C++ implementation of Radix Sort
+#include <iostream>
+using namespace std;
+
+// A utility function to get maximum value in arr[]
+int getMax(int arr[], int n)
+{
+	int mx = arr[0];
+	for (int i = 1; i < n; i++)
+		if (arr[i] > mx)
+			mx = arr[i];
+	return mx;
+}
+
+// A function to do counting sort of arr[] according to
+// the digit represented by exp.
+void countSort(int arr[], int n, int exp)
+{
+	int output[n]; // output array
+	int i, count[10] = { 0 };
+
+	// Store count of occurrences in count[]
+	for (i = 0; i < n; i++)
+		count[(arr[i] / exp) % 10]++;
+
+	// Change count[i] so that count[i] now contains actual
+	// position of this digit in output[]
+	for (i = 1; i < 10; i++)
+		count[i] += count[i - 1];
+
+	// Build the output array
+	for (i = n - 1; i >= 0; i--) {
+		output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+		count[(arr[i] / exp) % 10]--;
+	}
+
+	// Copy the output array to arr[], so that arr[] now
+	// contains sorted numbers according to current digit
+	for (i = 0; i < n; i++)
+		arr[i] = output[i];
+}
+
+// The main function to that sorts arr[] of size n using
+// Radix Sort
+void radixsort(int arr[], int n)
+{
+	// Find the maximum number to know number of digits
+	int m = getMax(arr, n);
+
+	// Do counting sort for every digit. Note that instead
+	// of passing digit number, exp is passed. exp is 10^i
+	// where i is current digit number
+	for (int exp = 1; m / exp > 0; exp *= 10)
+		countSort(arr, n, exp);
+}
+
+// A utility function to print an array
+void print(int arr[], int n)
+{
+	for (int i = 0; i < n; i++)
+		cout << arr[i] << " ";
+}
+
+// Driver Code
+int main()
+{
+	int arr[] = { 170, 45, 75, 90, 802, 24, 2, 66 };
+	int n = sizeof(arr) / sizeof(arr[0]);
+	
+	// Function Call
+	radixsort(arr, n);
+	print(arr, n);
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// C++ program for Merge Sort
+#include <iostream>
+using namespace std;
+
+// Merges two subarrays of array[].
+// First subarray is arr[begin..mid]
+// Second subarray is arr[mid+1..end]
+void merge(int array[], int const left, int const mid, int const right)
+{
+	auto const subArrayOne = mid - left + 1;
+	auto const subArrayTwo = right - mid;
+
+	// Create temp arrays
+	auto *leftArray = new int[subArrayOne],
+		*rightArray = new int[subArrayTwo];
+
+	// Copy data to temp arrays leftArray[] and rightArray[]
+	for (auto i = 0; i < subArrayOne; i++)
+		leftArray[i] = array[left + i];
+	for (auto j = 0; j < subArrayTwo; j++)
+		rightArray[j] = array[mid + 1 + j];
+
+	auto indexOfSubArrayOne = 0, // Initial index of first sub-array
+		indexOfSubArrayTwo = 0; // Initial index of second sub-array
+	int indexOfMergedArray = left; // Initial index of merged array
+
+	// Merge the temp arrays back into array[left..right]
+	while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo) {
+		if (leftArray[indexOfSubArrayOne] <= rightArray[indexOfSubArrayTwo]) {
+			array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
+			indexOfSubArrayOne++;
+		}
+		else {
+			array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
+			indexOfSubArrayTwo++;
+		}
+		indexOfMergedArray++;
+	}
+	// Copy the remaining elements of
+	// left[], if there are any
+	while (indexOfSubArrayOne < subArrayOne) {
+		array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
+		indexOfSubArrayOne++;
+		indexOfMergedArray++;
+	}
+	// Copy the remaining elements of
+	// right[], if there are any
+	while (indexOfSubArrayTwo < subArrayTwo) {
+		array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
+		indexOfSubArrayTwo++;
+		indexOfMergedArray++;
+	}
+}
+
+// begin is for left index and end is
+// right index of the sub-array
+// of arr to be sorted */
+void mergeSort(int array[], int const begin, int const end)
+{
+	if (begin >= end)
+		return; // Returns recursively
+
+	auto mid = begin + (end - begin) / 2;
+	mergeSort(array, begin, mid);
+	mergeSort(array, mid + 1, end);
+	merge(array, begin, mid, end);
+}
+
+// UTILITY FUNCTIONS
+// Function to print an array
+void printArray(int A[], int size)
+{
+	for (auto i = 0; i < size; i++)
+		cout << A[i] << " ";
+}
+
+// Driver code
+int main()
+{
+	int arr[] = { 12, 11, 13, 5, 6, 7 };
+	auto arr_size = sizeof(arr) / sizeof(arr[0]);
+
+	cout << "Given array is \n";
+	printArray(arr, arr_size);
+
+	mergeSort(arr, 0, arr_size - 1);
+
+	cout << "\nSorted array is \n";
+	printArray(arr, arr_size);
+	return 0;
+}
+
+// This code is contributed by Mayank Tyagi
+// This code was revised by Joshua Estes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//tree traversal
+#include<iostream>
+using namespace std;
+struct node
+{
+    int data;
+    struct node * left,*right;
+};
+struct node *creaate_node(int data)
+{
+    struct node *new_node=(struct node *)malloc(sizeof(struct node));
+    new_node->data=data;
+    new_node->left=NULL;
+    new_node->right=NULL;
+    return new_node;
+}
+
+void preorder(struct node *root)
+{
+    if(root!=NULL)
+    {
+        cout<<root->data<<" ";
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+void inorder(struct node *root)
+{
+    if(root!=NULL)
+    {
+        inorder(root->left);
+        cout<<root->data<<" ";
+        inorder(root->right);
+    }
+}
+
+void postorder(struct node *root)
+{
+    if (root!=NULL)
+    {
+        postorder(root->left);
+        postorder(root->right);
+        cout<<root->data<<" ";
+    }
+}
+
+int main()
+{
+    struct node *p=creaate_node(4);
+    struct node *p1=creaate_node(1);
+    struct node *p2=creaate_node(6);
+    struct node *p3=creaate_node(5);
+    struct node *p4=creaate_node(2);
+
+    p->left=p1;
+    p->right=p2;
+    p1->left=p3;
+    p1->right=p4;
+
+    cout<<"\npre order traversal"<<endl;
+    preorder(p);
+    cout<<"\npost order traversal"<<endl;
+    postorder(p);
+    cout<<"\nin order traversal"<<endl;
+    inorder(p);
+    return 0;
+}
